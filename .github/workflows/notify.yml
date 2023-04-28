@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Notify Slack
-        if: ${{ github.event == 'workflow_run' && job.started_at && duration.seconds(fromDate(job.completed_at) - fromDate(job.started_at)) >= 120 }}
+        if: ${{ github.event == 'workflow_run' && job.started_at && duration.seconds(fromDate(job.completed_at) - fromDate(job.started_at)) >= 5 }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
