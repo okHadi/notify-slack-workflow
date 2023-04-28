@@ -5,6 +5,7 @@ on:
     workflows: [Run Sample task that takes x minutes]
     types:
       - in_progress
+      - completed
 
 jobs:
   slack_notification:
