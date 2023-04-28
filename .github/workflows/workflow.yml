@@ -9,6 +9,7 @@ jobs:
       - name: Sleep for 2 minutes
         timeout-minutes: 1
         run: sleep 120
+        continue-on-error: true
       - name: Send Slack message if timed out
         uses: rtCamp/action-slack-notify@v2
         env:
