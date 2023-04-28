@@ -1,16 +1,15 @@
-name: Run Sample task that takes x minutes
-on:
-  workflow_dispatch:
+name: Stop after 2 minutes and send a Slack message
+
+on: [push]
 
 jobs:
-  build:
+  timeout_job:
     runs-on: ubuntu-latest
-    timeout-minutes: 1
     steps:
       - name: Sleep for 2 minutes
+        timeout-minutes: 1
         run: sleep 120
-      - name: Slack Notification
-        if: ${{ job.status == 'timed_out' }}
+      - name: Send Slack message if timed out
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
