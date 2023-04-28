@@ -9,3 +9,9 @@ jobs:
     steps:
       - name: Sleep for 2 minutes
         run: sleep 120
+      - name: Slack Notification
+        if: ${{ job.status == 'timed_out' }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: "Workflow running for more than 1 minute."
