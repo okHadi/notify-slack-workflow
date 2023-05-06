@@ -14,6 +14,7 @@ jobs:
 
   slack_message:
     runs-on: ubuntu-latest
+    needs: timeout_job
     steps:
       - name: Send Slack message if timed out
         uses: rtCamp/action-slack-notify@v2
