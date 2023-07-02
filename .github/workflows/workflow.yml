@@ -1,23 +1,23 @@
 name: Stop after 2 minutes and send a Slack message
 
 on:
-  workflow_dispatch:
+  pull_request:
 
 jobs:
   timeout_job:
+    timeout-minutes: 1
+    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
-      - name: Exit
-        run: exit 1
-      - name: Send message
-        if: failure()
-        run: echo "Workflow timed out."
-  # slack_message:
-  #   runs-on: ubuntu-latest
-  #   needs: timeout_job
-  #   steps:
-  #     - name: Send Slack message if timed out
-  #       uses: rtCamp/action-slack-notify@v2
-  #       env:
-  #         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-  #         SLACK_MESSAGE: "Workflow running for more than 2 minutes."
+      - name: Sleep for 2 minutes
+        run: sleep 120
+
+  slack_message:
+    runs-on: ubuntu-latest
+    needs: timeout_job
+    steps:
+      - name: Send Slack message if timed out
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: "Workflow running for more than 2 minutes."
